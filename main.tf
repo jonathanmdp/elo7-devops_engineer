@@ -32,8 +32,8 @@ module "vpc" {
   private_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
   public_subnets  = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
 
-  enable_nat_gateway                   = false # Cria NAT Gateway nas subnets privadas
-  single_nat_gateway                   = false # Deve ser verdadeiro se você deseja provisionar UM ÚNICO NAT Gateway compartilhado em todas as subnets privadas
+  enable_nat_gateway                   = true # Cria NAT Gateway nas subnets privadas
+  single_nat_gateway                   = true # Deve ser verdadeiro se você deseja provisionar UM ÚNICO NAT Gateway compartilhado em todas as subnets privadas
   enable_vpn_gateway                   = false
   enable_dns_hostnames                 = true
   enable_s3_endpoint                   = true  # Habilita VPC Endpoint para S3
@@ -59,7 +59,7 @@ module "my-ecs" {
   CLUSTER_NAME   = "ecs-elo7"
   INSTANCE_TYPE  = "t2.micro"
   SSH_KEY_NAME   = aws_key_pair.mykeypair.key_name
-  VPC_SUBNETS    = join(",", module.vpc.public_subnets)
+  VPC_SUBNETS    = join(",", module.vpc.private_subnets)
   ENABLE_SSH     = true
   SSH_SG         = aws_security_group.allow-ssh.id
   LOG_GROUP      = var.LOG_GROUP
