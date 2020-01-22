@@ -13,16 +13,17 @@ phases:
     commands:
       # Criando infraestrutura com TERRAFORM
       - terraform init -lock=false -force-copy -input=false
-      - terraform apply -auto-approve -input=false
+      - terraform apply -lock=false -auto-approve
 
       - echo Logando no Amazon ECR... # Inicia sessão no Amazon ECR
       - aws --version
       - $(aws ecr get-login --region us-east-1 --no-include-email) # Realiza loggin no ECR
-      - REPOSITORY_URI=xxxxxxxxxx.dkr.ecr.us-east-1.amazonaws.com/my-service
+      - REPOSITORY_URI=XxXxXxXxXx.dkr.ecr.us-east-1.amazonaws.com/my-service
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7) # Adicione uma tag de imagem com os primeiros sete caracteres do ID de confirmação do Git da origem.
       - IMAGE_TAG=${COMMIT_HASH:=latest}
   build:
     commands:
+      - cd docker-react_app
       - echo Build iniciado hein `date`
       - echo Construindo imagem docker...
       - docker build -t $REPOSITORY_URI:latest .
@@ -35,6 +36,9 @@ phases:
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
       - printf '[{"name":"my-service","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+      - cd ../
+      - echo Copie e cole o seguinte link \(dns_name\) no navegador: 
+      - terraform output
 # Grave um arquivo denominado imagedefinitions.json na raiz da compilação que contém o nome do contêiner 
 # e a imagem e tag do serviço do Amazon ECS. O estágio de implantação do pipeline de CD usa essas 
 # informações para criar uma nova revisão da definição de tarefa do serviço e, em seguida, atualiza 
