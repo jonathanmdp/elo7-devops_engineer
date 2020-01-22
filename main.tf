@@ -32,8 +32,8 @@ module "vpc" {
   private_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
   public_subnets  = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
 
-  enable_nat_gateway                   = true # Cria NAT Gateway nas subnets privadas
-  single_nat_gateway                   = true # Deve ser verdadeiro se você deseja provisionar UM ÚNICO NAT Gateway compartilhado em todas as subnets privadas
+  enable_nat_gateway                   = true  # Cria NAT Gateway nas subnets privadas
+  single_nat_gateway                   = false # Deve ser verdadeiro se você deseja provisionar UM ÚNICO NAT Gateway compartilhado em todas as subnets privadas
   enable_vpn_gateway                   = false
   enable_dns_hostnames                 = true
   enable_s3_endpoint                   = true  # Habilita VPC Endpoint para S3
@@ -66,8 +66,8 @@ module "my-ecs" {
   AWS_ACCOUNT_ID       = data.aws_caller_identity.current.account_id
   AWS_REGION           = var.AWS_REGION
   ECS_MINSIZE          = 1
-  ECS_MAXSIZE          = 1
-  ECS_DESIRED_CAPACITY = 1
+  ECS_MAXSIZE          = 3
+  ECS_DESIRED_CAPACITY = 2
 }
 
 module "my-service" {
