@@ -54,17 +54,20 @@ module "vpc" {
 }
 
 module "my-ecs" {
-  source         = "./modules/ecs-cluster"
-  VPC_ID         = module.vpc.vpc_id
-  CLUSTER_NAME   = "ecs-elo7"
-  INSTANCE_TYPE  = "t2.micro"
-  SSH_KEY_NAME   = aws_key_pair.mykeypair.key_name
-  VPC_SUBNETS    = join(",", module.vpc.private_subnets)
-  ENABLE_SSH     = true
-  SSH_SG         = aws_security_group.allow-ssh.id
-  LOG_GROUP      = var.LOG_GROUP
-  AWS_ACCOUNT_ID = data.aws_caller_identity.current.account_id
-  AWS_REGION     = var.AWS_REGION
+  source               = "./modules/ecs-cluster"
+  VPC_ID               = module.vpc.vpc_id
+  CLUSTER_NAME         = "ecs-elo7"
+  INSTANCE_TYPE        = "t2.micro"
+  SSH_KEY_NAME         = aws_key_pair.mykeypair.key_name
+  VPC_SUBNETS          = join(",", module.vpc.private_subnets)
+  ENABLE_SSH           = true
+  SSH_SG               = aws_security_group.allow-ssh.id
+  LOG_GROUP            = var.LOG_GROUP
+  AWS_ACCOUNT_ID       = data.aws_caller_identity.current.account_id
+  AWS_REGION           = var.AWS_REGION
+  ECS_MINSIZE          = 1
+  ECS_MAXSIZE          = 1
+  ECS_DESIRED_CAPACITY = 1
 }
 
 module "my-service" {
