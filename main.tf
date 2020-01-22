@@ -79,7 +79,7 @@ module "my-service" {
   HEALTHCHECK_MATCHER = "200"
   CPU_RESERVATION     = "256"
   MEMORY_RESERVATION  = "128"
-  LOG_GROUP           = "my-log-group"
+  LOG_GROUP           = "elo7"
   DESIRED_COUNT       = 2
   ALB_ARN             = module.my-alb.alb_arn
 }
