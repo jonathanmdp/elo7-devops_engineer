@@ -42,10 +42,11 @@ module "vpc" {
   enable_apigw_endpoint                = false # Habilita VPC Endpoint para API Gateway
   ecr_dkr_endpoint_private_dns_enabled = false # Se deve ou não associar uma zona privada ao VPC Endpoint especificado para ECR DKR
 
-  #enable_ecr_dkr_endpoint             = true # Habilita VPC Endpoint para ECR dkr
+  //enable_ecr_dkr_endpoint             = true # Habilita VPC Endpoint para ECR dkr
+
   // O ID de um ou mais grupos de segurança a serem associados à interface de rede para o VPC Endpoint ECR DKR
   // É necessário 
-  # ecr_dkr_endpoint_security_group_ids = [data.aws_security_group.selected.id]
+  //ecr_dkr_endpoint_security_group_ids = [data.aws_security_group.selected.id]
 
   tags = {
     Terraform   = "true"
