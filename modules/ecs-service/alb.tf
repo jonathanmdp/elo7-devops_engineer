@@ -22,7 +22,7 @@ resource "aws_alb_target_group" "ecs-service" {
     unhealthy_threshold = 3
     protocol            = "HTTP"
     path                = "/"
-    interval            = 60
+    interval            = 10
     matcher             = var.HEALTHCHECK_MATCHER
   }
 }
