@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://www.linkedin.com/in/alysonfranklin/)
 
 Este código foi criado para provisionar a infraestrutura na AWS.
-São mais de 60 recursos/serviços provisionados na AWS.
+São mais de 60 recursos provisionados na AWS.
 Dentre eles tem: Um Cluster ECS, VPC, ALB, VPC Endpoint para S3/ECR, EC2, CloudWatch, Bucket s3, KMS, DynamoDB, AutoscalingGroup etc.
 As maquinas estão na subnet privada utilizando NAT Gateway. O acesso ao ECR e S3 é realizado pela rede interna da AWS utilizando VPC Endpoint.
 
@@ -33,6 +33,7 @@ Clicando em **details** na etapa **"Terraform_Plan"** você consegue visualizar 
 ![N|Solid](https://i.imgur.com/w3CuNtK.png)
 
 Para o Terraform aplicar as alterações é necessário clicar em **review** na etapa **Manual_Approval** e **Approve** conforme mostra imagem abaixo:
+
 ![N|Solid](https://i.imgur.com/c8n4D4K.png)
 
 O terraform irá aplicar as alterações e você poderá ver a infraestrutura sendo criada/alterada clicando em **details** na etapa **Terraform_Apply**. 
