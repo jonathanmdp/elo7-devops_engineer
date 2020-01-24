@@ -16,6 +16,6 @@ phases:
       - terraform validate
       - terraform plan -lock=false -input=false
 
-      # ECS Destroy
+# Para criar o plano de destruição, descomente as linhas abaixo e comente as de cima
       #- terraform init -force-copy -input=false
       #- terraform plan -destroy -lock=false -input=false

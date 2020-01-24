@@ -1,5 +1,12 @@
 version: 0.2
 
+env:
+# O nome do cluster/service tem que ser o mesmo criado pelo Terraform
+  variables:
+    AWS_REGION: "us-east-1"
+    CLUSTER_NAME: "ecs-elo7"
+    SERVICE_NAME: "my-service"
+
 phases:
   install:
     runtime-versions:
@@ -18,6 +25,7 @@ phases:
       - echo Logando no Amazon ECR... # Inicia sessão no Amazon ECR
       - aws --version
       - $(aws ecr get-login --region us-east-1 --no-include-email) # Realiza loggin no ECR
+# Adicione o ID da sua conta em XxxXXxXxXx
       - REPOSITORY_URI=XxxXXxXxXx.dkr.ecr.us-east-1.amazonaws.com/my-service
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7) # Adicione uma tag de imagem com os primeiros sete caracteres do ID de confirmação do Git da origem.
       - IMAGE_TAG=${COMMIT_HASH:=latest}
@@ -36,6 +44,8 @@ phases:
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
       - printf '[{"name":"my-service","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+# A linha abaixo não é necessária se tiver um projeto apenas para o deploy da aplicação
+      - aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --force-new-deployment
       - cd ..
       - echo Copie e cole o seguinte link '(dns_name)' no navegador
       - terraform output
@@ -47,6 +57,7 @@ phases:
 artifacts:
     files: imagedefinitions.json
 
-      # ECS Destroy
+# Para destruir a infraestrutura basta descomentar as linhas abaixo
+# e comentar as de cima a partir da linha terraform init
       #- terraform init -force-copy -input=false
       #- terraform destroy -lock=false -auto-approve -input=false
