@@ -9,7 +9,7 @@ São mais de 60 recursos provisionados na AWS.
 Dentre eles tem: Um Cluster ECS, VPC, ALB, VPC Endpoint para S3/ECR, EC2, CloudWatch, Bucket s3, KMS, DynamoDB, AutoscalingGroup etc.
 As maquinas estão na subnet privada utilizando NAT Gateway. O acesso ao ECR e S3 é realizado pela rede interna da AWS utilizando VPC Endpoint.
 
-Depois que a infraestrutura é criada, é realizado o build e deploy da aplicação e atualizado a task definition.
+Depois que a infraestrutura é criada, é realizado o build e deploy da aplicação e atualizado a task definition. No final do processo é exibido o DNS do LoadBalancer no CodeBuild. Acesse a aplicação no navegador utilizando o DNS do Loadbalancer
 
 Este projeto foi criado especificamente para ser executado pelo AWS Developer Tools (https://github.com/alysonfranklin/AwsDeveloperTools.git)
 
