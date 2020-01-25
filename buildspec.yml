@@ -7,6 +7,9 @@ env:
     CLUSTER_NAME: "ecs-elo7"
     SERVICE_NAME: "my-service"
 
+  parameter-store:
+    ACCOUNT_ID: "account_id"
+
 phases:
   install:
     runtime-versions:
@@ -25,8 +28,7 @@ phases:
       - echo Logando no Amazon ECR... # Inicia sessão no Amazon ECR
       - aws --version
       - $(aws ecr get-login --region us-east-1 --no-include-email) # Realiza loggin no ECR
-# Adicione o ID da sua conta em XxxXXxXxXx
-      - REPOSITORY_URI=XxxXXxXxXx.dkr.ecr.us-east-1.amazonaws.com/my-service
+      - REPOSITORY_URI=$ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/my-service
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7) # Adicione uma tag de imagem com os primeiros sete caracteres do ID de confirmação do Git da origem.
       - IMAGE_TAG=${COMMIT_HASH:=latest}
   build:
