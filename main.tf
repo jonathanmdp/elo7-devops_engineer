@@ -75,7 +75,7 @@ module "my-service" {
   source              = "./modules/ecs-service"
   VPC_ID              = module.vpc.vpc_id
   APPLICATION_NAME    = "my-service"
-  APPLICATION_PORT    = "80"
+  APPLICATION_PORT    = "8080"
   APPLICATION_VERSION = "latest"
   CLUSTER_ARN         = module.my-ecs.cluster_arn
   SERVICE_ROLE_ARN    = module.my-ecs.service_role_arn
