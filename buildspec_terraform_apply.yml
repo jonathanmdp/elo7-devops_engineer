@@ -34,6 +34,7 @@ phases:
   build:
     commands:
       - cd docker-react_app
+      - sleep 40
       - echo Build iniciado hein `date`
       - echo Construindo imagem docker...
       - docker build -t $REPOSITORY_URI:latest .
