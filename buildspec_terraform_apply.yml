@@ -33,8 +33,7 @@ phases:
       - IMAGE_TAG=${COMMIT_HASH:=latest}
   build:
     commands:
-      - cd docker-react_app
-      - sleep 40
+      - cd docker-node_app
       - echo Build iniciado hein `date`
       - echo Construindo imagem docker...
       - docker build -t $REPOSITORY_URI:latest .
