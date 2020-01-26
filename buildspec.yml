@@ -19,7 +19,7 @@ phases:
       - wget https://releases.hashicorp.com/terraform/"$TERRAFORM_VERSION"/terraform_"$TERRAFORM_VERSION"_linux_amd64.zip
       - unzip terraform_"$TERRAFORM_VERSION"_linux_amd64.zip
       - mv terraform /usr/local/bin/
-  pre_build:
+  build:
     commands:
       # Criando infraestrutura com TERRAFORM
       - terraform init -lock=false -force-copy -input=false
@@ -31,8 +31,6 @@ phases:
       - REPOSITORY_URI=$ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/my-service
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7) # Adicione uma tag de imagem com os primeiros sete caracteres do ID de confirmação do Git da origem.
       - IMAGE_TAG=${COMMIT_HASH:=latest}
-  build:
-    commands:
       - cd docker-node_app
       - echo Build iniciado hein `date`
       - echo Construindo imagem docker...
